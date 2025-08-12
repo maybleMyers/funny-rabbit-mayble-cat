@@ -3,143 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Funny Rabbit Mayble Cat 🐰🐱</title>
+    <title>Media Gallery</title>
     <style>
+        :root {
+            --primary: #8b5cf6;
+            --secondary: #06b6d4;
+            --dark: #1f2937;
+            --light: #f9fafb;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        :root {
-            --primary: #8b5cf6;
-            --secondary: #ec4899;
-            --dark: #1f2937;
-            --light: #f3f4f6;
-            --success: #10b981;
-            --error: #ef4444;
-        }
-
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             min-height: 100vh;
-            color: #333;
+            padding: 20px;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
         }
 
         header {
             text-align: center;
-            padding: 40px 0;
-            color: white;
-            position: relative;
-            overflow: hidden;
+            margin-bottom: 40px;
         }
 
         .title {
             font-size: 3rem;
-            font-weight: bold;
+            color: white;
             margin-bottom: 10px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            animation: bounce 2s ease-in-out infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
         }
 
         .subtitle {
             font-size: 1.2rem;
-            opacity: 0.95;
-        }
-
-        .upload-section {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-            animation: slideIn 0.5s ease-out;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .upload-area {
-            border: 3px dashed var(--primary);
-            border-radius: 15px;
-            padding: 40px;
-            text-align: center;
-            transition: all 0.3s ease;
-            background: linear-gradient(45deg, #f3f4f6, #fef3c7);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .upload-area:hover {
-            border-color: var(--secondary);
-            background: linear-gradient(45deg, #fef3c7, #fce7f3);
-            transform: scale(1.02);
-        }
-
-        .upload-area.dragover {
-            background: linear-gradient(45deg, #ddd6fe, #fce7f3);
-            border-color: var(--secondary);
-            transform: scale(1.05);
-        }
-
-        .upload-icon {
-            font-size: 3rem;
+            color: rgba(255, 255, 255, 0.9);
             margin-bottom: 20px;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
-
-        .upload-text {
-            font-size: 1.2rem;
-            color: var(--dark);
-            margin-bottom: 10px;
-        }
-
-        .file-input {
-            display: none;
-        }
-
-        .upload-button {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 25px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .upload-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
 
         .gallery {
@@ -332,6 +238,23 @@
             opacity: 0.9;
         }
 
+        .error-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: white;
+        }
+
+        .error-state h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #fbbf24;
+        }
+
+        .error-state p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
         @media (max-width: 768px) {
             .title {
                 font-size: 2rem;
@@ -347,30 +270,23 @@
 <body>
     <div class="container">
         <header>
-            <h1 class="title">🐰 Funny Rabbit Mayble Cat 🐱</h1>
-            <p class="subtitle">Upload and share your funniest rabbit and cat moments!</p>
+            <h1 class="title">📸 Media Gallery 🎬</h1>
+            <p class="subtitle">Your collection of pictures and videos</p>
         </header>
 
-        <div class="upload-section">
-            <div class="upload-area" id="uploadArea">
-                <div class="upload-icon">📸</div>
-                <p class="upload-text">Drag & drop images or videos here</p>
-                <p style="color: #666; margin: 10px 0;">or</p>
-                <button class="upload-button" onclick="document.getElementById('fileInput').click()">
-                    Choose Files
-                </button>
-                <input type="file" id="fileInput" class="file-input" multiple accept="image/*,video/*">
-            </div>
-            <div class="loading" id="loading">
-                <div class="loader"></div>
-                <p>Uploading your media...</p>
-            </div>
+        <div class="loading" id="loading">
+            <div class="loader"></div>
+            <p>Loading media files...</p>
         </div>
 
         <div id="galleryContainer">
-            <div class="empty-state" id="emptyState">
-                <h2>No media uploaded yet!</h2>
-                <p>Start by uploading some funny rabbit or cat photos and videos above 🎉</p>
+            <div class="empty-state" id="emptyState" style="display: none;">
+                <h2>No media files found</h2>
+                <p>Add some images and videos to the /media folder to get started! 🎉</p>
+            </div>
+            <div class="error-state" id="errorState" style="display: none;">
+                <h2>⚠️ Media folder not found</h2>
+                <p>Please create a /media folder in your repository and add some images or videos.</p>
             </div>
             <div class="gallery" id="gallery"></div>
         </div>
@@ -384,91 +300,124 @@
     </div>
 
     <script>
-        // Store uploaded media in memory (in production, this would come from Cloudflare)
+        // Store media items
         let mediaItems = [];
 
+        // Supported file extensions
+        const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp', 'svg'];
+        const videoExtensions = ['mp4', 'webm', 'ogg', 'mov', 'avi', 'mkv'];
+
+        // Common media filenames to try loading
+        const commonMediaFiles = [
+            // Images
+            'image1.jpg', 'image2.jpg', 'image3.jpg', 'image4.jpg', 'image5.jpg',
+            'photo1.png', 'photo2.png', 'photo3.png', 'photo4.png', 'photo5.png',
+            'pic1.jpeg', 'pic2.jpeg', 'pic3.jpeg', 'pic4.jpeg', 'pic5.jpeg',
+            'img1.webp', 'img2.webp', 'img3.webp', 'img4.webp', 'img5.webp',
+            // Videos
+            'video1.mp4', 'video2.mp4', 'video3.mp4', 'video4.mp4', 'video5.mp4',
+            'clip1.webm', 'clip2.webm', 'clip3.webm', 'clip4.webm', 'clip5.webm',
+            'movie1.mov', 'movie2.mov', 'movie3.mov', 'movie4.mov', 'movie5.mov'
+        ];
+
         // Get elements
-        const uploadArea = document.getElementById('uploadArea');
-        const fileInput = document.getElementById('fileInput');
         const gallery = document.getElementById('gallery');
         const loading = document.getElementById('loading');
         const modal = document.getElementById('modal');
         const modalMedia = document.getElementById('modalMedia');
         const emptyState = document.getElementById('emptyState');
+        const errorState = document.getElementById('errorState');
 
-        // Drag and drop events
-        uploadArea.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            uploadArea.classList.add('dragover');
-        });
+        // Check if file exists
+        async function fileExists(url) {
+            try {
+                const response = await fetch(url, { method: 'HEAD' });
+                return response.ok;
+            } catch (error) {
+                return false;
+            }
+        }
 
-        uploadArea.addEventListener('dragleave', () => {
-            uploadArea.classList.remove('dragover');
-        });
+        // Get file extension
+        function getFileExtension(filename) {
+            return filename.split('.').pop().toLowerCase();
+        }
 
-        uploadArea.addEventListener('drop', (e) => {
-            e.preventDefault();
-            uploadArea.classList.remove('dragover');
-            handleFiles(e.dataTransfer.files);
-        });
+        // Determine file type
+        function getFileType(filename) {
+            const extension = getFileExtension(filename);
+            if (imageExtensions.includes(extension)) return 'image';
+            if (videoExtensions.includes(extension)) return 'video';
+            return null;
+        }
 
-        // File input change
-        fileInput.addEventListener('change', (e) => {
-            handleFiles(e.target.files);
-        });
+        // Load media files from the media folder
+        async function loadMediaFiles() {
+            loading.classList.add('active');
+            mediaItems = [];
 
-        // Handle file upload
-        async function handleFiles(files) {
-            const validFiles = Array.from(files).filter(file => {
-                return file.type.startsWith('image/') || file.type.startsWith('video/');
-            });
-
-            if (validFiles.length === 0) {
-                alert('Please upload only images or videos!');
-                return;
+            // Try to load common media files
+            for (const filename of commonMediaFiles) {
+                const url = `./media/${filename}`;
+                const exists = await fileExists(url);
+                
+                if (exists) {
+                    const type = getFileType(filename);
+                    if (type) {
+                        const mediaItem = {
+                            id: Date.now() + Math.random(),
+                            url: url,
+                            name: filename,
+                            type: type
+                        };
+                        mediaItems.push(mediaItem);
+                    }
+                }
             }
 
-            loading.classList.add('active');
+            // Also try some numbered variations
+            for (let i = 1; i <= 20; i++) {
+                const testFiles = [
+                    `${i}.jpg`, `${i}.png`, `${i}.jpeg`, `${i}.webp`,
+                    `${i}.mp4`, `${i}.webm`, `${i}.mov`,
+                    `file${i}.jpg`, `file${i}.png`, `file${i}.mp4`,
+                    `media${i}.jpg`, `media${i}.png`, `media${i}.mp4`
+                ];
 
-            for (const file of validFiles) {
-                await uploadFile(file);
+                for (const filename of testFiles) {
+                    const url = `./media/${filename}`;
+                    const exists = await fileExists(url);
+                    
+                    if (exists) {
+                        const type = getFileType(filename);
+                        if (type && !mediaItems.find(item => item.url === url)) {
+                            const mediaItem = {
+                                id: Date.now() + Math.random(),
+                                url: url,
+                                name: filename,
+                                type: type
+                            };
+                            mediaItems.push(mediaItem);
+                        }
+                    }
+                }
             }
 
             loading.classList.remove('active');
             updateGallery();
         }
 
-        // Simulate file upload (in production, this would upload to Cloudflare)
-        async function uploadFile(file) {
-            // In production, you would upload to Cloudflare here
-            // For demo, we'll use local object URLs
-            
-            return new Promise((resolve) => {
-                setTimeout(() => {
-                    const url = URL.createObjectURL(file);
-                    const mediaItem = {
-                        id: Date.now() + Math.random(),
-                        url: url,
-                        name: file.name,
-                        type: file.type.startsWith('video/') ? 'video' : 'image',
-                        cloudflareUrl: null // This would be the Cloudflare URL in production
-                    };
-                    
-                    mediaItems.push(mediaItem);
-                    resolve();
-                }, 500); // Simulate upload delay
-            });
-        }
-
         // Update gallery display
         function updateGallery() {
             if (mediaItems.length === 0) {
                 emptyState.style.display = 'block';
+                errorState.style.display = 'none';
                 gallery.style.display = 'none';
                 return;
             }
 
             emptyState.style.display = 'none';
+            errorState.style.display = 'none';
             gallery.style.display = 'grid';
             
             gallery.innerHTML = mediaItems.map(item => `
@@ -513,53 +462,35 @@
             }
         });
 
-        // Initialize
-        updateGallery();
-
-        // Cloudflare Integration Instructions (Remove this in production)
-        console.log(`
-        === CLOUDFLARE INTEGRATION SETUP ===
-        
-        To connect this to Cloudflare for media storage:
-        
-        1. Set up Cloudflare R2 Storage or Cloudflare Stream
-        2. Create a Worker or use Cloudflare Pages Functions
-        3. Replace the uploadFile() function with actual API calls
-        4. Store the Cloudflare URLs in your database
-        5. Update API_ENDPOINT in the code
-        
-        See README for detailed instructions.
-        `);
-        async function uploadToCloudflare(file) {
-    const reader = new FileReader();
-    
-    return new Promise((resolve, reject) => {
-        reader.onload = async () => {
-            const base64 = reader.result.split(',')[1];
-            
-            try {
-                const response = await fetch('/api/upload', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        file: base64,
-                        filename: Date.now() + '_' + file.name,
-                        contentType: file.type
-                    })
-                });
-                
-                const data = await response.json();
-                resolve(data.url);
-            } catch (error) {
-                reject(error);
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
             }
-        };
+        });
+
+        // Initialize - load media files on page load
+        document.addEventListener('DOMContentLoaded', loadMediaFiles);
+
+        console.log(`
+        === MEDIA GALLERY SETUP ===
         
-        reader.readAsDataURL(file);
-    });
-}        
+        This page displays images and videos from the /media folder.
+        
+        Supported formats:
+        • Images: JPG, JPEG, PNG, GIF, WebP, BMP, SVG
+        • Videos: MP4, WebM, OGG, MOV, AVI, MKV
+        
+        To add media:
+        1. Create a /media folder in your repository
+        2. Add your images and videos to this folder
+        3. The page will automatically detect and display them
+        
+        The page looks for common filenames like:
+        • image1.jpg, photo1.png, video1.mp4, etc.
+        • Numbered files: 1.jpg, 2.png, 3.mp4, etc.
+        • file1.jpg, media1.png, etc.
+        `);
     </script>
 </body>
 </html>
