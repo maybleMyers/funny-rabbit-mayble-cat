@@ -1,0 +1,5 @@
+# Copy this file to .dev.vars and fill in your values
+R2_PUBLIC_URL=https://your-bucket.r2.dev
+CF_ACCOUNT_ID=your_account_id
+STREAM_ENABLED=false
+CF_STREAM_TOKEN=your_stream_token_if_using_stream

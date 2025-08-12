@@ -1,0 +1,7 @@
+name = "funny-rabbit-maybe-cat"
+compatibility_date = "2024-01-01"
+
+[[r2_buckets]]
+binding = "MEDIA_BUCKET"
+bucket_name = "funny-rabbit-media"
+preview_bucket_name = "funny-rabbit-media-preview"
