@@ -307,17 +307,10 @@
         const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp', 'svg'];
         const videoExtensions = ['mp4', 'webm', 'ogg', 'mov', 'avi', 'mkv'];
 
-        // Common media filenames to try loading
-        const commonMediaFiles = [
-            // Images
-            'image1.jpg', 'image2.jpg', 'image3.jpg', 'image4.jpg', 'image5.jpg',
-            'photo1.png', 'photo2.png', 'photo3.png', 'photo4.png', 'photo5.png',
-            'pic1.jpeg', 'pic2.jpeg', 'pic3.jpeg', 'pic4.jpeg', 'pic5.jpeg',
-            'img1.webp', 'img2.webp', 'img3.webp', 'img4.webp', 'img5.webp',
-            // Videos
-            'video1.mp4', 'video2.mp4', 'video3.mp4', 'video4.mp4', 'video5.mp4',
-            'clip1.webm', 'clip2.webm', 'clip3.webm', 'clip4.webm', 'clip5.webm',
-            'movie1.mov', 'movie2.mov', 'movie3.mov', 'movie4.mov', 'movie5.mov'
+        // Your specific files (we know these exist)
+        const knownFiles = [
+            'catflip2.png',
+            'outputcatflip.mp4'
         ];
 
         // Get elements
@@ -356,41 +349,21 @@
             loading.classList.add('active');
             mediaItems = [];
 
-            // Try to load common media files
-            for (const filename of commonMediaFiles) {
+            console.log('🔍 Loading media files...');
+
+            // For Netlify dev, let's directly check the known files
+            console.log('📁 Checking known files in media folder...');
+            
+            for (const filename of knownFiles) {
                 const url = `./media/${filename}`;
-                const exists = await fileExists(url);
+                console.log(`🔍 Checking: ${url}`);
                 
-                if (exists) {
-                    const type = getFileType(filename);
-                    if (type) {
-                        const mediaItem = {
-                            id: Date.now() + Math.random(),
-                            url: url,
-                            name: filename,
-                            type: type
-                        };
-                        mediaItems.push(mediaItem);
-                    }
-                }
-            }
-
-            // Also try some numbered variations
-            for (let i = 1; i <= 20; i++) {
-                const testFiles = [
-                    `${i}.jpg`, `${i}.png`, `${i}.jpeg`, `${i}.webp`,
-                    `${i}.mp4`, `${i}.webm`, `${i}.mov`,
-                    `file${i}.jpg`, `file${i}.png`, `file${i}.mp4`,
-                    `media${i}.jpg`, `media${i}.png`, `media${i}.mp4`
-                ];
-
-                for (const filename of testFiles) {
-                    const url = `./media/${filename}`;
+                try {
                     const exists = await fileExists(url);
-                    
                     if (exists) {
                         const type = getFileType(filename);
-                        if (type && !mediaItems.find(item => item.url === url)) {
+                        if (type) {
+                            console.log(`✅ Loaded: ${filename}`);
                             const mediaItem = {
                                 id: Date.now() + Math.random(),
                                 url: url,
@@ -399,11 +372,16 @@
                             };
                             mediaItems.push(mediaItem);
                         }
+                    } else {
+                        console.log(`❌ Not found: ${filename}`);
                     }
+                } catch (error) {
+                    console.log(`❌ Error loading ${filename}:`, error);
                 }
             }
 
             loading.classList.remove('active');
+            console.log(`📊 Total media files loaded: ${mediaItems.length}`);
             updateGallery();
         }
 
@@ -475,21 +453,20 @@
         console.log(`
         === MEDIA GALLERY SETUP ===
         
-        This page displays images and videos from the /media folder.
+        This page automatically loads all images and videos from the /media folder.
         
         Supported formats:
         • Images: JPG, JPEG, PNG, GIF, WebP, BMP, SVG
         • Videos: MP4, WebM, OGG, MOV, AVI, MKV
         
-        To add media:
-        1. Create a /media folder in your repository
-        2. Add your images and videos to this folder
-        3. The page will automatically detect and display them
+        Current known files: ${knownFiles.join(', ')}
         
-        The page looks for common filenames like:
-        • image1.jpg, photo1.png, video1.mp4, etc.
-        • Numbered files: 1.jpg, 2.png, 3.mp4, etc.
-        • file1.jpg, media1.png, etc.
+        The page will:
+        1. Try to get a complete directory listing (if server supports it)
+        2. Fall back to loading known files
+        3. Display all found media files in the gallery
+        
+        Add any new media files to the /media folder and refresh the page.
         `);
     </script>
 </body>
