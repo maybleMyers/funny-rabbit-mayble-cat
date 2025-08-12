@@ -1,13 +1,15 @@
 {
-  "name": "funny-rabbit-maybe-cat",
+  "name": "funny-rabbit-mayble-cat",
   "version": "1.0.0",
   "description": "Upload and share funny rabbit and cat media",
   "scripts": {
-    "dev": "wrangler pages dev ./public",
-    "deploy": "wrangler pages deploy ./public",
-    "preview": "wrangler pages dev ./public --compatibility-date=2024-01-01"
+    "dev": "netlify dev",
+    "build": "echo 'No build needed'"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^7.0.0"
   },
   "devDependencies": {
-    "wrangler": "^3.0.0"
+    "netlify-cli": "^17.0.0"
   }
 }
