@@ -5,13 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Media Gallery</title>
     <style>
-        :root {
-            --primary: #8b5cf6;
-            --secondary: #06b6d4;
-            --dark: #1f2937;
-            --light: #f9fafb;
-        }
-
         * {
             margin: 0;
             padding: 0;
@@ -19,107 +12,98 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+            background-color: #0d1117;
+            color: #e6edf3;
             min-height: 100vh;
-            padding: 20px;
+            line-height: 1.5;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 24px;
         }
 
         header {
-            text-align: center;
-            margin-bottom: 40px;
+            border-bottom: 1px solid #21262d;
+            padding-bottom: 24px;
+            margin-bottom: 24px;
         }
 
         .title {
-            font-size: 3rem;
-            color: white;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-size: 2rem;
+            font-weight: 600;
+            color: #f0f6fc;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .title::before {
+            content: "📁";
+            font-size: 1.5rem;
         }
 
         .subtitle {
-            font-size: 1.2rem;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 20px;
+            font-size: 1rem;
+            color: #7d8590;
+            font-weight: 400;
+        }
+
+        .stats {
+            display: flex;
+            gap: 16px;
+            margin-top: 12px;
+            font-size: 0.875rem;
+        }
+
+        .stat-item {
+            color: #7d8590;
+        }
+
+        .stat-value {
+            color: #f0f6fc;
+            font-weight: 600;
         }
 
         .gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+            margin-top: 24px;
         }
 
         .media-item {
-            background: white;
-            border-radius: 15px;
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 6px;
             overflow: hidden;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
+            transition: border-color 0.2s ease;
             cursor: pointer;
-            animation: fadeIn 0.5s ease-out;
-            position: relative;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.9);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
         }
 
         .media-item:hover {
-            transform: translateY(-5px) scale(1.03);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+            border-color: #58a6ff;
         }
 
-        .media-item img,
-        .media-item video {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            display: block;
-        }
-
-        .media-info {
-            padding: 15px;
-            background: linear-gradient(to right, #f3f4f6, #fef3c7);
-        }
-
-        .media-type {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-
-        .media-type.video {
-            background: var(--primary);
-            color: white;
-        }
-
-        .media-type.image {
-            background: var(--secondary);
-            color: white;
-        }
-
-        .media-name {
-            font-size: 0.9rem;
-            color: var(--dark);
-            white-space: nowrap;
+        .media-preview {
+            position: relative;
+            height: 200px;
             overflow: hidden;
-            text-overflow: ellipsis;
+            background-color: #21262d;
+        }
+
+        .media-preview img,
+        .media-preview video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .media-preview video {
+            pointer-events: none;
         }
 
         .play-overlay {
@@ -127,27 +111,58 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 60px;
-            height: 60px;
-            background: rgba(255, 255, 255, 0.9);
+            width: 48px;
+            height: 48px;
+            background-color: rgba(0, 0, 0, 0.8);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            pointer-events: none;
-            transition: all 0.3s ease;
+            color: #f0f6fc;
+            font-size: 18px;
+            transition: all 0.2s ease;
         }
 
         .play-overlay::after {
             content: '▶';
-            font-size: 24px;
-            color: var(--primary);
-            margin-left: 5px;
+            margin-left: 2px;
         }
 
         .media-item:hover .play-overlay {
-            transform: translate(-50%, -50%) scale(1.2);
-            background: rgba(255, 255, 255, 1);
+            background-color: #58a6ff;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .media-info {
+            padding: 12px 16px;
+        }
+
+        .media-name {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #58a6ff;
+            margin-bottom: 4px;
+            word-break: break-word;
+        }
+
+        .media-type {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 2px 6px;
+            border-radius: 3px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .media-type.image {
+            background-color: #1f6feb;
+            color: #ffffff;
+        }
+
+        .media-type.video {
+            background-color: #238636;
+            color: #ffffff;
         }
 
         .modal {
@@ -157,9 +172,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.9);
+            background-color: rgba(0, 0, 0, 0.95);
             z-index: 1000;
-            animation: fadeIn 0.3s ease;
         }
 
         .modal.active {
@@ -178,29 +192,31 @@
         .modal-content video {
             max-width: 100%;
             max-height: 90vh;
-            border-radius: 10px;
+            border-radius: 6px;
         }
 
         .modal-close {
             position: absolute;
             top: -40px;
             right: 0;
-            color: white;
-            font-size: 2rem;
+            color: #f0f6fc;
+            font-size: 24px;
             cursor: pointer;
-            transition: transform 0.3s ease;
+            transition: color 0.2s ease;
+            background: none;
+            border: none;
+            padding: 8px;
         }
 
         .modal-close:hover {
-            transform: scale(1.2);
+            color: #58a6ff;
         }
 
         .loading {
             display: none;
             text-align: center;
-            padding: 20px;
-            color: white;
-            font-size: 1.1rem;
+            padding: 48px 24px;
+            color: #7d8590;
         }
 
         .loading.active {
@@ -208,13 +224,13 @@
         }
 
         .loader {
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top: 4px solid white;
+            border: 2px solid #21262d;
+            border-top: 2px solid #58a6ff;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 32px;
+            height: 32px;
             animation: spin 1s linear infinite;
-            margin: 20px auto;
+            margin: 0 auto 16px;
         }
 
         @keyframes spin {
@@ -222,47 +238,47 @@
             100% { transform: rotate(360deg); }
         }
 
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: white;
-        }
-
-        .empty-state h2 {
-            font-size: 2rem;
-            margin-bottom: 10px;
-        }
-
-        .empty-state p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-
+        .empty-state,
         .error-state {
             text-align: center;
-            padding: 60px 20px;
-            color: white;
+            padding: 48px 24px;
+        }
+
+        .empty-state h2,
+        .error-state h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #f0f6fc;
+            margin-bottom: 8px;
+        }
+
+        .empty-state p,
+        .error-state p {
+            color: #7d8590;
+            font-size: 1rem;
         }
 
         .error-state h2 {
-            font-size: 2rem;
-            margin-bottom: 10px;
-            color: #fbbf24;
-        }
-
-        .error-state p {
-            font-size: 1.1rem;
-            opacity: 0.9;
+            color: #f85149;
         }
 
         @media (max-width: 768px) {
+            .container {
+                padding: 16px;
+            }
+            
             .title {
-                font-size: 2rem;
+                font-size: 1.5rem;
             }
             
             .gallery {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-                gap: 15px;
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                gap: 12px;
+            }
+
+            .stats {
+                flex-direction: column;
+                gap: 8px;
             }
         }
     </style>
@@ -270,8 +286,19 @@
 <body>
     <div class="container">
         <header>
-            <h1 class="title">📸 Media Gallery 🎬</h1>
-            <p class="subtitle">Your collection of pictures and videos</p>
+            <h1 class="title">Media Gallery</h1>
+            <p class="subtitle">Collection of images and videos</p>
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-value" id="fileCount">0</span> files
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="imageCount">0</span> images
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="videoCount">0</span> videos
+                </div>
+            </div>
         </header>
 
         <div class="loading" id="loading">
@@ -282,46 +309,126 @@
         <div id="galleryContainer">
             <div class="empty-state" id="emptyState" style="display: none;">
                 <h2>No media files found</h2>
-                <p>Add some images and videos to the /media folder to get started! 🎉</p>
+                <p>Add images and videos to the /media folder to get started</p>
             </div>
+
             <div class="error-state" id="errorState" style="display: none;">
-                <h2>⚠️ Media folder not found</h2>
-                <p>Please create a /media folder in your repository and add some images or videos.</p>
+                <h2>Error loading media files</h2>
+                <p>Please check the console for more information</p>
             </div>
+
             <div class="gallery" id="gallery"></div>
         </div>
     </div>
 
+    <!-- Modal for full-size viewing -->
     <div class="modal" id="modal">
         <div class="modal-content">
-            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <button class="modal-close" onclick="closeModal()">&times;</button>
             <div id="modalMedia"></div>
         </div>
     </div>
 
     <script>
-        // Store media items
-        let mediaItems = [];
-
-        // Supported file extensions
-        const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp', 'svg'];
-        const videoExtensions = ['mp4', 'webm', 'ogg', 'mov', 'avi', 'mkv'];
+        // Configuration
+        const supportedImageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp', 'svg'];
+        const supportedVideoExtensions = ['mp4', 'webm', 'ogg', 'mov', 'avi', 'mkv'];
+        const imageExtensions = supportedImageExtensions;
+        const videoExtensions = supportedVideoExtensions;
 
         // Your specific files (we know these exist)
         const knownFiles = [
-            'catflip2.png',
-            'outputcatflip.mp4'
+            '20250530-145338_2531224314.mp4',
+            '20250726-094701_3431680009.mp4',
+            '20250729-174812_881785311.mp4',
+            '20250730-043821_2002453601.mp4',
+            '20250730-051304_3780652590.mp4',
+            '20250730-063559_3646159164.mp4',
+            '20250730-123254_53829397.mp4',
+            '20250802-043101_944731867.mp4',
+            '20250803-055949_1337307463.mp4',
+            '20250803-115044_1383157637.mp4',
+            '20250803-190547_2677941536.mp4',
+            '20250803-201252_2677941537.mp4',
+            '20250805-083808_364057068.mp4',
+            '20250808_103914.mp4',
+            '20250808-215905_2112730364.mp4',
+            '20250810-030649_1355415135.mp4',
+            '20250810-045430_1103271199.mp4',
+            '20250810-072403_3989896687.mp4',
+            '20250909_150756.mp4',
+            '20250910_191217.mp4',
+            '20250918_161445.mp4',
+            '20250921_165357.mp4',
+            '20250922_132657.mp4',
+            '20250922_142249.mp4',
+            'bf16chef.mp4',
+            'casound_1_chr2.mp4',
+            'catflipsound.mp4',
+            'catsound.mp4',
+            'decent.mp4',
+            'extended_20250401-021755_seed2936548445_20250331-060111_1541185826_1_chr2.mp4',
+            'extension.mp4',
+            'frogcat.mp4',
+            'gooder.mp4',
+            'haha.mp4',
+            'i2v-A14B_832480_1_A_realistic_action_horror_video_rated_R_for_viole_20250728_180649.mp4',
+            'i2v-A14B_832480_1_An_award-winning_hyper-detailed_masterpiece_photo_20250729_031706.mp4',
+            'medi.mp4',
+            'meow(1).mp4',
+            'meows.mp4',
+            'multitalk_1751225823_4346_s2287754327.mp4',
+            'multitalk_1751335101_9246_s1580953518.mp4',
+            'multitalk_1751849312_7794_s4123291134.mp4',
+            'multitalk_1751852291_3524_s3659028972_1.mp4',
+            'multitalk_1751862572_3231_s3971554891.mp4',
+            'multitalk_1752365759_2692_s3085043624.mp4',
+            'multitalk_1752443727_9093_s1858335949_1_chr2_prob4(1).mp4',
+            'multitalk_1752443727_9093_s1858335949_1_chr2_prob4.mp4',
+            'multitalk_1753694205_9243_s3774603075.mp4',
+            'newsamp50.mp4',
+            'output3.mp4',
+            'outputcat(1).mp4',
+            'outputcat.mp4',
+            'outputrabbit.mp4',
+            'pandern.mp4',
+            'single_cat_exp4noteaONE.mp4',
+            'slapped.mp4',
+            'sliding_looper.mp4',
+            'spacecat_3_chr2_prob4.mp4',
+            'theif.mp4',
+            'tmp_l4pz409.mp4',
+            'tmp6fz0lcvc.mp4',
+            'tmp6s3bp2yt.mp4',
+            'tmp87mrxrya.mp4',
+            'tmpa_hc1f6y.mp4',
+            'tmpr8ugldgo.mp4',
+            'tmpsg8e6m00.mp4',
+            'tmpv32svan_.mp4',
+            'tmpv9jc4hj2.mp4',
+            'tmpwchd4zkd.mp4',
+            'tmpwxhpc4wb.mp4',
+            'tmpyae4ow1v.mp4',
+            'v2v985s.mp4',
+            'wtf.mp4',
+            'yummmymecha.mp4'
         ];
 
-        // Get elements
-        const gallery = document.getElementById('gallery');
+        // DOM elements
         const loading = document.getElementById('loading');
-        const modal = document.getElementById('modal');
-        const modalMedia = document.getElementById('modalMedia');
+        const gallery = document.getElementById('gallery');
         const emptyState = document.getElementById('emptyState');
         const errorState = document.getElementById('errorState');
+        const modal = document.getElementById('modal');
+        const modalMedia = document.getElementById('modalMedia');
+        const fileCount = document.getElementById('fileCount');
+        const imageCount = document.getElementById('imageCount');
+        const videoCount = document.getElementById('videoCount');
 
-        // Check if file exists
+        // Media items array
+        let mediaItems = [];
+
+        // Check if a file exists
         async function fileExists(url) {
             try {
                 const response = await fetch(url, { method: 'HEAD' });
@@ -351,7 +458,7 @@
 
             console.log('🔍 Loading media files...');
 
-            // For Netlify dev, let's directly check the known files
+            // Check known files
             console.log('📁 Checking known files in media folder...');
             
             for (const filename of knownFiles) {
@@ -391,6 +498,7 @@
                 emptyState.style.display = 'block';
                 errorState.style.display = 'none';
                 gallery.style.display = 'none';
+                updateStats(0, 0, 0);
                 return;
             }
 
@@ -398,19 +506,32 @@
             errorState.style.display = 'none';
             gallery.style.display = 'grid';
             
+            const images = mediaItems.filter(item => item.type === 'image').length;
+            const videos = mediaItems.filter(item => item.type === 'video').length;
+            updateStats(mediaItems.length, images, videos);
+            
             gallery.innerHTML = mediaItems.map(item => `
                 <div class="media-item" onclick="openModal('${item.id}')">
-                    ${item.type === 'video' 
-                        ? `<video src="${item.url}" muted></video>
-                           <div class="play-overlay"></div>`
-                        : `<img src="${item.url}" alt="${item.name}">`
-                    }
+                    <div class="media-preview">
+                        ${item.type === 'video' 
+                            ? `<video src="${item.url}" muted></video>
+                               <div class="play-overlay"></div>`
+                            : `<img src="${item.url}" alt="${item.name}">`
+                        }
+                    </div>
                     <div class="media-info">
-                        <span class="media-type ${item.type}">${item.type.toUpperCase()}</span>
                         <div class="media-name">${item.name}</div>
+                        <span class="media-type ${item.type}">${item.type}</span>
                     </div>
                 </div>
             `).join('');
+        }
+
+        // Update statistics
+        function updateStats(total, images, videos) {
+            fileCount.textContent = total;
+            imageCount.textContent = images;
+            videoCount.textContent = videos;
         }
 
         // Open modal
